@@ -101,6 +101,16 @@ app.route("/articles")
     .catch(function(err){
         res.send(err);
     })
+})
+
+.delete(function(req,res){
+    Article.deleteOne({title:req.params.articleTitle})
+    .then(function(){
+        res.send("Successfully deleted the article");
+    })
+    .catch(function(err){
+        res.send("No article with that title was found");
+    });
 });
 
 app.listen(3000, function () {
