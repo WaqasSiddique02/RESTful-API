@@ -89,7 +89,19 @@ app.route("/articles")
             res.send(err);
         }
     })
-    });
+    })
+    .patch(function(req,res){
+        Article.findOneAndUpdate(
+        {title:req.params.articleTitle },
+        {$set:req.body}
+    )
+    .then(function(){
+        res.send("Successfully updated the article");
+    })
+    .catch(function(err){
+        res.send(err);
+    })
+});
 
 app.listen(3000, function () {
     console.log("Server started on port 3000");
