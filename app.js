@@ -70,6 +70,25 @@ app.route("/articles")
         .catch(function(err){
             res.send(err);
         });
+    })
+    .put(function(req,res){
+        Article.findOneAndUpdate({
+            title:req.params.articleTitle
+        },
+        {
+            title:req.body.title,
+            content:req.body.content
+        },
+        {overwrite:true}
+    )
+    .then(function(err){
+        if(!err){
+            res.send("Successfully updated the article");
+        }
+        else{
+            res.send(err);
+        }
+    })
     });
 
 app.listen(3000, function () {
