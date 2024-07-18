@@ -19,6 +19,9 @@ const articleSchema = new mongoose.Schema({
 });
 const Article = mongoose.model("Article", articleSchema);
 
+
+/////////////////////////////////////REQUEST TARGETTING ALL METHODS////////////////////////////////////
+
 app.route("/articles")
     .get(function (req, res) {
         Article.find()
@@ -52,6 +55,21 @@ app.route("/articles")
             .catch(function (err) {
                 res.send(err);
             });
+    });
+
+    /////////////////////////////////////REQUEST TARGETTING A SPECIFIC METHODS////////////////////////////////////
+    app.route("/articles/:articleTitle")
+    .get(function (req, res) {
+        Article.findOne({title: req.params.articleTitle})
+        .then(function (found) {
+            res.send(found);
+            if(!found){
+                res.send("No article with that title was found");
+            }
+        })
+        .catch(function(err){
+            res.send(err);
+        });
     });
 
 app.listen(3000, function () {
